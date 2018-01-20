@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import javax.validation.constraints.*;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-20T14:09:30.704-08:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-20T15:40:13.391-08:00")
 
 @Api(value = "signin", description = "the signin API")
 public interface SigninApi {
@@ -28,7 +28,7 @@ public interface SigninApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Void> signinGet( @NotNull @Size(min=8) @ApiParam(value = "username used to register in system", required = true) @RequestParam(value = "securitytoken", required = true) String securitytoken,
+    ResponseEntity<Void> signinGet( @NotNull @Size(min=8) @ApiParam(value = "uuid used to register in system", required = true) @RequestParam(value = "uuid", required = true) String uuid,
         @ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken);
 
 }

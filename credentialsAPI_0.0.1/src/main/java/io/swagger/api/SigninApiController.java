@@ -16,14 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import javax.validation.constraints.*;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-20T14:09:30.704-08:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-20T15:40:13.391-08:00")
 
 @Controller
 public class SigninApiController implements SigninApi {
 
 
 
-    public ResponseEntity<Void> signinGet( @NotNull @Size(min=8) @ApiParam(value = "username used to register in system", required = true) @RequestParam(value = "securitytoken", required = true) String securitytoken,
+    public ResponseEntity<Void> signinGet( @NotNull @Size(min=8) @ApiParam(value = "uuid used to register in system", required = true) @RequestParam(value = "uuid", required = true) String uuid,
         @ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
