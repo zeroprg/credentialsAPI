@@ -25,7 +25,7 @@ public interface AuthPasswordApi {
         @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/auth-password",
-        produces = { "application/json" }, 
+        produces = { "text/plain" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Object> authPasswordPost(@ApiParam(value = "" ,required=true ) @RequestHeader(value="Authorization", required=true) String authorization);

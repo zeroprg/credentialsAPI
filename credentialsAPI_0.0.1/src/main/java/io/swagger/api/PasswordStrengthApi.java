@@ -19,7 +19,7 @@ import javax.validation.constraints.*;
 @Api(value = "password-strength", description = "the password-strength API")
 public interface PasswordStrengthApi {
 
-    @ApiOperation(value = "PasswordStrength", notes = "By tapping on the \"Password\" field at the main page, an AJAX request is sent to this endpoint to check how strong the password is. Result is itnteger from 0 to 10 /. Password send in Base64 encoding", response = Object.class, tags={ "password", })
+    @ApiOperation(value = "PasswordStrength", notes = "By tapping on the \"Password\" field at the main page, an AJAX request is sent to this endpoint to check how strong the password is. Result is itnteger from 0 to 100 /. Password send in Base64 encoding", response = Object.class, tags={ "password", })
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "The server successfully processed the request and is not returning any content.", response = Object.class),
         @ApiResponse(code = 400, message = "Bad Request", response = Object.class),

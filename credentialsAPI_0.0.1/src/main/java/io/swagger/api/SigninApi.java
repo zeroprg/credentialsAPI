@@ -25,7 +25,7 @@ public interface SigninApi {
         @ApiResponse(code = 400, message = "Bad Request", response = Void.class),
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Void.class) })
     @RequestMapping(value = "/signin",
-        produces = { "application/json" }, 
+        produces = { "application/json"  }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<Void> signinGet( @NotNull @Size(min=8) @ApiParam(value = "uuid used to register in system", required = true) @RequestParam(value = "uuid", required = true) String uuid,
