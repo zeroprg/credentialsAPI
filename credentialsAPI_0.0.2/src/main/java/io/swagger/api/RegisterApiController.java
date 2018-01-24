@@ -20,7 +20,7 @@ public class RegisterApiController implements RegisterApi {
     @Autowired
 	private IPasswordsTool passwordTool;  
     @Autowired
-    private IPersistence vaultTool;
+    private IPersistence persistance;
 
 	public ResponseEntity<Object> authPasswordPost(
 			@ApiParam(value = "Send Base64 encoded user:password pair", required = true)
@@ -31,10 +31,10 @@ public class RegisterApiController implements RegisterApi {
     	// generate secure token which will be use to authenticate in Syncope
     	String secureToken = passwordTool.generatePassPhrase();
     	
-    	// Store user's password in Vault
+    	// Store user's password in Persistanse Layer
     	MySecretDataDTO  mySecretData = new MySecretDataDTO(credentials[0], credentials[1], secureToken);
     	
-    	vaultTool.writeSecrets(credentials[0], mySecretData);
+    	persistance.writeSecrets(credentials[0], mySecretData);
     	
         return new ResponseEntity<Object>(secureToken, HttpStatus.OK);
     }

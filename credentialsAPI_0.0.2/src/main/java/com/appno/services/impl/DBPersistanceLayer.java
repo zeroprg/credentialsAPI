@@ -39,15 +39,21 @@ public class DBPersistanceLayer implements IPersistence {
 		mySecretData.setDate(new Date());
 		mySecretData.setEmail(mySecretDataDTO.getEMail());
 		mySecretData.setPassword(mySecretDataDTO.getPassword());
-		mySecretData.setSecureToken(mySecretDataDTO.getSecuredToken());
+		mySecretData.setSecureToken(mySecretDataDTO.getSecureToken());
 		mySecretDataRepository.save(mySecretData);
 	}
 
 
 	@Override
 	public Object readSecretsById(String email) {
-		List<MySecretData> mySecretDatas = mySecretDataRepository.findByEmail(email) ;
-		return mySecretDatas.get(0);
+		List<MySecretData> mySecretDatas = mySecretDataRepository.findByEmail(email);
+		MySecretData mySecretData = mySecretDatas.get(0);
+		MySecretDataDTO mySecretDataDTO =  new MySecretDataDTO();
+		mySecretDataDTO.setEMail(mySecretData.getEmail());
+		mySecretDataDTO.setPassword(mySecretData.getPassword());
+		mySecretDataDTO.setSecureToken(mySecretData.getSecureToken());
+		
+		return mySecretDataDTO;
 	}
 
 

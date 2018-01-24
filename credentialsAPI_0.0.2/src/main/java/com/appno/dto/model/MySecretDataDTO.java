@@ -8,11 +8,11 @@ public  class MySecretDataDTO {
 	
 	public MySecretDataDTO(){}
 	
-	public String getSecuredToken() {
+	public String getSecureToken() {
 		return secureToken;
 	}
 
-	public void setSecuredToken(String securedToken) {
+	public void setSecureToken(String securedToken) {
 		this.secureToken = securedToken;
 	}
 

@@ -20,7 +20,7 @@ public class AuthPasswordApiController implements AuthPasswordApi {
 	@Autowired
 	private IPasswordsTool passwordTool;
 	@Autowired
-	private IPersistence vaultTool;
+	private IPersistence persistance;
 
 	public ResponseEntity<Object> authPasswordPost(
 			@ApiParam(value = "Send encoded user:password pair", required = true)
@@ -28,7 +28,7 @@ public class AuthPasswordApiController implements AuthPasswordApi {
 		
 		String credentials[] = authorization.split(":");
 
-		String vaultPassword = ((MySecretDataDTO) vaultTool.readSecretsById(credentials[0])).getPassword();
+		String vaultPassword = ((MySecretDataDTO) persistance.readSecretsById(credentials[0])).getPassword();
 
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		String secureToken = null;
