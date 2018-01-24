@@ -21,6 +21,11 @@ public class Swagger2SpringBoot implements CommandLineRunner {
 	}
 
 	public static void main(String[] args) throws Exception {
+		
+		 System.setProperty("spring.cloud.vault.token", "5cfa4b16-38a0-dd82-901a-0bde53e12903");
+		 System.setProperty("spring.cloud.vault.scheme", "http");
+	     System.setProperty("spring.cloud.vault.host","localhost");
+	     System.setProperty("spring.cloud.vault.port","8200");
 		new SpringApplication(Swagger2SpringBoot.class).run(args);
 	}
 

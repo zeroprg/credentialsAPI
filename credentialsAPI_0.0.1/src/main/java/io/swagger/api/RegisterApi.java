@@ -25,10 +25,10 @@ public interface RegisterApi {
         @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/register",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
-    ResponseEntity<Object> registerPost( @NotNull @Size(min=8) @ApiParam(value = "This is user name", required = true) @RequestParam(value = "username", required = true) String username,
-         @NotNull @ApiParam(value = "This alfa-numeric password", required = true) @RequestParam(value = "password", required = true) String password);
+             produces = { "text/plain" }, 
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+        ResponseEntity<Object> authPasswordPost(@ApiParam(value = "This alfa-numeric password and user name pair username:password ecrypted Base64 encoing" ,required=true )
+        @RequestHeader(value="Authorization", required=true) String authorization);
 
 }
