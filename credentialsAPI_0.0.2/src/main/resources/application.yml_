@@ -1,0 +1,30 @@
+
+spring.cloud.vault:
+    token: 9a63de21-8af7-311a-9a5a-151b6a0d4795
+    host: localhost
+    port: 8200
+    scheme: http
+    connection-timeout: 5000
+    read-timeout: 15000
+    config:
+        order: -10
+
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path:/api-docs
+server:
+  context-path: /CredentialsAPI
+  port: 8080
+
+spring:
+  jackson:
+    date-format: io.swagger.RFC3339DateFormat
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+  application:
+    name: my-application
+
