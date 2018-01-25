@@ -19,16 +19,15 @@ import javax.validation.constraints.*;
 @Api(value = "register", description = "the register API")
 public interface RegisterApi {
 
-    @ApiOperation(value = "Register", notes = "By filling the form and pressing a \"Regiter\" button at the top page (/), the form will send an AJAX POST to this endpoint. You will be then redirected to the main page (/main) if the request is successful or will show an error message if it fails.", response = Object.class, tags={ "register", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The server successfully processed the request. Return secureToken in body as plain text", response = Object.class),
-        @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
-        @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
-    @RequestMapping(value = "/register",
-             produces = { "text/plain" }, 
-            consumes = { "application/json" },
-            method = RequestMethod.POST)
-        ResponseEntity<Object> authPasswordPost(@ApiParam(value = "This alfa-numeric password and user name pair username:password ecrypted Base64 encoing" ,required=true )
-        @RequestHeader(value="Authorization", required=true) String authorization);
+	   @ApiOperation(value = "Register", notes = "By filling the form and pressing a \"Regiter\" button at the top page (/), the form will send an AJAX POST to this endpoint. You will be then redirected to the main page (/main) if the request is successful or will show an error message if it fails.", response = Object.class, tags={ "register", })
+	    @ApiResponses(value = { 
+	        @ApiResponse(code = 200, message = "The server successfully processed the request. Return secureToken in body as plain text", response = Object.class),
+	        @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
+	        @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
+	    @RequestMapping(value = "/register",
+	        produces = { "application/json" }, 
+	        consumes = { "application/json" },
+	        method = RequestMethod.POST)
+	    ResponseEntity<Object> registerPost(@ApiParam(value = "" ,required=true ) @RequestHeader(value="Authorization", required=true) String authorization);
 
 }

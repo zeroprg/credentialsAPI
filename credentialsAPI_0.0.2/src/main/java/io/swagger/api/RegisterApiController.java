@@ -22,7 +22,7 @@ public class RegisterApiController implements RegisterApi {
     @Autowired
     private IPersistence persistance;
 
-	public ResponseEntity<Object> authPasswordPost(
+	public ResponseEntity<Object> registerPost(
 			@ApiParam(value = "Send Base64 encoded user:password pair", required = true)
 			@RequestHeader(value = "Authorization", required = true) String authorization) {
     	
@@ -38,5 +38,5 @@ public class RegisterApiController implements RegisterApi {
     	
         return new ResponseEntity<Object>(secureToken, HttpStatus.OK);
     }
-
+	
 }

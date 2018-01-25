@@ -11,6 +11,7 @@ import com.appno.services.IPasswordsTool;
 import com.appno.services.IPersistence;
 
 import io.swagger.annotations.ApiParam;
+import io.swagger.model.Errormsg;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-20T15:40:13.391-08:00")
 
@@ -32,13 +33,20 @@ public class AuthPasswordApiController implements AuthPasswordApi {
 
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		String secureToken = null;
+		Object retObj;
 		
 		if (credentials[1].equals(vaultPassword)) {
 			status = HttpStatus.OK;
 			secureToken = passwordTool.generatePassPhrase();
+			retObj = secureToken;
+		} else {
+			Errormsg error = new Errormsg();
+			error.setCode(HttpStatus.UNAUTHORIZED.value());
+			error.setMsg(HttpStatus.UNAUTHORIZED.getReasonPhrase());
+			retObj = error;
 		}
 		
-		return new ResponseEntity<Object>(secureToken, status);
+		return new ResponseEntity<Object>(retObj, status);
 	}
 
 }
