@@ -25,7 +25,7 @@ public interface SignoutApi {
         @ApiResponse(code = 400, message = "Bad Request", response = Void.class),
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Void.class) })
     @RequestMapping(value = "/signout",
-        method = RequestMethod.GET)
+    			method = RequestMethod.GET)
     ResponseEntity<Void> signoutGet(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken);
 
 }
