@@ -15,16 +15,16 @@ Here there are a few workflows :
 
 1) Registration and authnentication (encoding is off for testing sake)
 	 Register user by  "user:password" as Base64 encode pair (/register)
-POST /register
+#POST /register
  authenticate the user by   "user:password" as Base64 encode pair (/
-POST /auth-password
+#POST /auth-password
 signin by secureToken ( returned in body of /register or  /auth-password end pints)
-GET /signin
+#GET /signin
 
 2) Password reset eMail validation  and password update
 
 	Initiate password reset flow (secureToken passed in body)  (/reset-password).  It will start eMail validation flow which will redirect to update password screen
-POST /reset-password 
+#POST /reset-password 
 
 Call the /validate-by-email endpoint  from eMail link sent by /reset-password endpoint
 GET /validate-by-email
