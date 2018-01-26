@@ -1,0 +1,1 @@
+This project was generated based RAML file see it root folder.
