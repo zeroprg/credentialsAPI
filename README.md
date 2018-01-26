@@ -26,8 +26,8 @@ Here there are a few workflows :
 
 	
 ### POST /reset-password 
-	Initiate password reset flow (secureToken passed in body)  (/reset-password).  
-	It will start eMail validation flow which will redirect to update password screen.
+	Initiate password reset flow (secureToken passed in header)  (/reset-password).  
+	It will send eMail validation  which will have link  to update password endpoint.
 
 
 ### GET /validate-by-email
