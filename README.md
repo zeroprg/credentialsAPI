@@ -36,7 +36,7 @@ Here there are a few workflows :
 ### POST /update-password
     After successefull secureToken (this token used only for eMail validation) validateion redirect to update password screen post old 'user:password' and newpassword  by Base64 encoded 
 
-## 3) Other flows:  "Signout", "Unregister", "PasswordStrength", "Oauth"
+##  Other flows:  "Signout", "Unregister", "PasswordStrength", "Oauth"
 	These flows are very atomic , and will be specify after
 
 There is subfolder credentialsAPI_0.0.1 which contains the same API but persistance base on Spring Security Vault 
