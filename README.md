@@ -13,25 +13,28 @@ http://credentialsapi.us-east-2.elasticbeanstalk.com/CredentialsAPI/h2-console
 
 Here there are a few workflows :
 
-## 1) Registration and authnentication (encoding is off for testing sake).
-	Register user by  "user:password" as Base64 encode pair (/register)
+##  Registration and authnentication (encoding is off for testing sake).
+	
 ### POST /register
-    Authenticate the user by   "user:password" as Base64 encode pair (/
-### POST /auth-password
-   Signin by secureToken ( returned in body of /register or  /auth-password end pints)
+    Register user by  "user:password" as Base64 encode pair (/register)
+### POST /auth-password	
+	Authenticate the user by   "user:password" as Base64 encode pair
 ### GET /signin
+    Signin by secureToken ( returned in body of /register or  /auth-password end pints)
 
-## 2) Password reset eMail validation  and password update
+##  Password reset eMail validation  and password update
 
-	Initiate password reset flow (secureToken passed in body)  (/reset-password).  
-	It will start eMail validation flow which will redirect to update password screen.
 	
 ### POST /reset-password 
+	Initiate password reset flow (secureToken passed in body)  (/reset-password).  
+	It will start eMail validation flow which will redirect to update password screen.
 
-   Call the /validate-by-email endpoint  from eMail link sent by /reset-password endpoint
+
 ### GET /validate-by-email
-    After successefull secureToken (this token used only for eMail validation) validateion redirect to update password screen post old 'user:password' and newpassword  by Base64 encoded 
+   	Call the /validate-by-email endpoint  from eMail link sent by /reset-password endpoint
+
 ### POST /update-password
+    After successefull secureToken (this token used only for eMail validation) validateion redirect to update password screen post old 'user:password' and newpassword  by Base64 encoded 
 
 ## 3) Other flows:  "Signout", "Unregister", "PasswordStrength", "Oauth"
 	These flows are very atomic , and will be specify after
