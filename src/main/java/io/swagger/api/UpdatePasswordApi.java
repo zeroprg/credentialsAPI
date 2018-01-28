@@ -22,7 +22,7 @@ public interface UpdatePasswordApi {
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/update-password",
         method = RequestMethod.POST)
-    ResponseEntity<Object> updatePasswordPost(@ApiParam(value = "" ,required=true ) @RequestHeader(value="Authorization", required=true) String authorization,
+    ResponseEntity<Object> updatePasswordPost(@ApiParam(value = "" ,required=true ) @RequestHeader(value="Authorization", required=true) String authorization,  @RequestHeader(value="securetoken", required=true) String securetoken,
         @ApiParam(value = "" ,required=true ) @RequestHeader(value="newpassword", required=true) String newpassword);
 
 }

@@ -1,9 +1,20 @@
 package com.appno.persistance.entities;
 
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+
 @Entity
+@Table(name = "TOKENS",
+
+indexes =  {@Index(name = "my_index_name",  columnList="secureToken", unique = true),
+           @Index(name = "my_index_name2", columnList="email",     unique = false)})
 public class MySecretData {
 
 
@@ -13,12 +24,17 @@ public class MySecretData {
     Long id;
 
     String password;
+    @Column(unique=true)
     String email;
 
     //@Temporal(TemporalType.DATE)
     @Column(name = "CREATED_DATE")
     Date date;
 
+	Date expireDate;
+    Boolean active;
+    
+    @Column(unique=true)    
     String secureToken;
     
     public MySecretData(String password, String email, String secureToken, Date date) {
@@ -81,4 +97,22 @@ public class MySecretData {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    
+    public Date getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+    
 }

@@ -5,6 +5,7 @@ import io.swagger.model.Errormsg;
 import io.swagger.annotations.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.appno.dto.model.MySecretDataDTO;
+import com.appno.services.IPasswordsTool;
 import com.appno.services.IPersistence;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.validation.constraints.*;
@@ -24,6 +28,9 @@ import javax.validation.constraints.*;
 
 @Controller
 public class ValidateByEmailApiController implements ValidateByEmailApi {
+
+    @Autowired
+	private IPasswordsTool passwordTool; 
     @Autowired
     private IPersistence persistance;
 
@@ -32,14 +39,32 @@ public class ValidateByEmailApiController implements ValidateByEmailApi {
     	HttpStatus status = HttpStatus.OK;
 		Object retObj = securetoken;
 		
-    	// Read system by eMail validation token (this token can be used to sign in)
-    	if(  persistance.readSecretsByToken(securetoken) == null ) {
-    		Errormsg error = new Errormsg();
-			error.setCode(HttpStatus.UNAUTHORIZED.value());
-			error.setMsg(HttpStatus.UNAUTHORIZED.getReasonPhrase());
-			retObj = error;
-			status = HttpStatus.UNAUTHORIZED;
-    	}
+    	// Read system by eMail validation token (this token can be used to sign in only for password change)
+    	try {
+			if( persistance.readSecretsByToken(securetoken) == null ) {
+				status = HttpStatus.UNAUTHORIZED;
+				retObj = status.getReasonPhrase();
+			} else {
+				MySecretDataDTO mySecretDataDTO =  new MySecretDataDTO(null, null, securetoken); 
+				// make active back again
+				mySecretDataDTO.setActive(true);
+				// generate secure token which will be use to authenticate by default in browser
+				String newSecureToken = passwordTool.generatePassPhrase();
+				mySecretDataDTO.setSecureToken(newSecureToken);
+				// update secure token
+				persistance.writeSecrets(null, securetoken, mySecretDataDTO);    		
+				retObj = newSecureToken;
+				status = HttpStatus.OK;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			retObj = e.getMessage();
+		} catch (AccessException e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			retObj = e.getMessage();			
+		}
     	
         return new ResponseEntity<Object>(retObj, status );
     }
