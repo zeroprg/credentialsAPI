@@ -6,6 +6,7 @@ public  class MySecretDataDTO {
 	String password;
 	String eMail;
 	String secureToken;
+	Boolean validationByEmailToken;
 	Integer validInMinutes;
 	Boolean active = true;
 	Boolean admin = false;
@@ -75,6 +76,14 @@ public  class MySecretDataDTO {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+
+	public Boolean getValidationByEmailToken() {
+		return validationByEmailToken;
+	}
+
+	public void setValidationByEmailToken(Boolean validationByEmailToken) {
+		this.validationByEmailToken = validationByEmailToken;
 	}
 	
 }

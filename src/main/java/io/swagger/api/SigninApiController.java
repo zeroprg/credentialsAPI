@@ -28,10 +28,10 @@ public class SigninApiController implements SigninApi {
 
     	HttpStatus status = HttpStatus.OK;
 		Object retObj = securetoken;
-		
+		boolean isEmailToken = false;
     	
     	try {
-			if(  persistance.readSecretsByToken(securetoken) == null ) {
+			if(  persistance.readSecretsByToken(securetoken, isEmailToken) == null ) {
 				Errormsg error = new Errormsg();
 				error.setCode(HttpStatus.UNAUTHORIZED.value());
 				error.setMsg(HttpStatus.UNAUTHORIZED.getReasonPhrase());

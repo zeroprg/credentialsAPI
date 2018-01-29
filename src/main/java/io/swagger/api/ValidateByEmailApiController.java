@@ -38,10 +38,11 @@ public class ValidateByEmailApiController implements ValidateByEmailApi {
     public ResponseEntity<Object> validateByEmailGet(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken) {
     	HttpStatus status = HttpStatus.OK;
 		Object retObj = securetoken;
+		boolean isEmailToken = true;
 		
     	// Read system by eMail validation token (this token can be used to sign in only for password change)
     	try {
-			if( persistance.readSecretsByToken(securetoken) == null ) {
+			if( persistance.readSecretsByToken(securetoken, isEmailToken) == null ) {
 				status = HttpStatus.UNAUTHORIZED;
 				retObj = status.getReasonPhrase();
 			} else {
@@ -56,14 +57,10 @@ public class ValidateByEmailApiController implements ValidateByEmailApi {
 				retObj = newSecureToken;
 				status = HttpStatus.OK;
 			}
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException  | AccessException e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();
-		} catch (AccessException e) {
-			e.printStackTrace();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();			
+			retObj = e.getMessage();	
 		}
     	
         return new ResponseEntity<Object>(retObj, status );

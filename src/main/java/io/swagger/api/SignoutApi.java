@@ -19,13 +19,13 @@ import javax.validation.constraints.*;
 @Api(value = "signout", description = "the signout API")
 public interface SignoutApi {
 
-    @ApiOperation(value = "Signout", notes = "Secured token which stored by browser, used to authenticate in default mode. By tapping on the \"Sign Out\" button at the main page, an AJAX request is sent to this endpoint, sign out happened, then redirected to /.", response = Void.class, tags={ "signout", })
+    @ApiOperation(value = "Signout", notes = "Secured token which stored by browser, used to authenticate in default mode. By tapping on the \"Sign Out\" button at the main page, an AJAX request is sent to this endpoint, sign out happened, then redirected to /.", response = Object.class, tags={ "signout", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The server successfully processed the request.", response = Void.class),
-        @ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-        @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Void.class) })
+        @ApiResponse(code = 200, message = "The server successfully processed the request.", response = Object.class),
+        @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
+        @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/signout",
     			method = RequestMethod.GET)
-    ResponseEntity<Void> signoutGet(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken);
+    ResponseEntity<Object> signoutGet(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken);
 
 }

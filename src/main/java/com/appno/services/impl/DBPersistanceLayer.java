@@ -113,12 +113,12 @@ public class DBPersistanceLayer implements IPersistence {
 
 
 	@Override
-	public Object readSecretsByToken(String secureToken) throws NoSuchAlgorithmException, AccessException {
+	public Object readSecretsByToken(String secureToken, boolean isEmailToken) throws NoSuchAlgorithmException, AccessException {
 		List<MySecretData> mySecretDatas = null;
 		mySecretDatas = mySecretDataRepository.findBySecureToken(sha.hash(secureToken));
 		MySecretDataDTO mySecretDataDTO = null;
 		if(!mySecretDatas.isEmpty()){
-			checkAccessException(mySecretDatas, true);
+			checkAccessException(mySecretDatas, !isEmailToken);
 			MySecretData mySecretData = mySecretDatas.get(0);
 			mySecretDataDTO =  new MySecretDataDTO();
 			mySecretDataDTO.setEmail(mySecretData.getEmail());

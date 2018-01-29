@@ -60,14 +60,10 @@ public class AuthPasswordApiController implements AuthPasswordApi {
 					retObj = status.getReasonPhrase();
 				}
 			}
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException  | AccessException e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();
-		} catch (AccessException e) {
-			e.printStackTrace();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();
+			retObj = e.getMessage();	
 		}
 
 		return new ResponseEntity<Object>(retObj, status);

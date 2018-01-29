@@ -38,8 +38,10 @@ public class UpdatePasswordApiController implements UpdatePasswordApi {
 		MySecretDataDTO mySecretDataDTO = null;
 		HttpStatus status;
 		Object retObj;
+		boolean isEmailToken = false;
+		
 		try {
-			mySecretDataDTO = ((MySecretDataDTO) persistance.readSecretsByToken(secureToken));
+			mySecretDataDTO = ((MySecretDataDTO) persistance.readSecretsByToken(secureToken, isEmailToken));
 
 			String password = mySecretDataDTO.getPassword();
 			// String secureToken = null;
@@ -62,14 +64,10 @@ public class UpdatePasswordApiController implements UpdatePasswordApi {
 			mySecretDataDTO.setSecureToken(newSecureToken);
 			retObj = newSecureToken;
 			persistance.writeSecrets(credentials[0], null, new MySecretDataDTO(credentials[0], null, newSecureToken));
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException  | AccessException e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();
-		} catch (AccessException e) {
-			e.printStackTrace();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();
+			retObj = e.getMessage();	
 		}
 		
 		return new ResponseEntity<Object>(retObj, HttpStatus.OK);

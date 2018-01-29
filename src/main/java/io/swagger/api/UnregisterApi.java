@@ -19,14 +19,14 @@ import javax.validation.constraints.*;
 @Api(value = "unregister", description = "the unregister API")
 public interface UnregisterApi {
 
-    @ApiOperation(value = "Unregister", notes = "By tapping on the \"Unregister\" button at the main page, an AJAX request is sent to this endpoint, unregister, then redirected to /.", response = Void.class, tags={ "unregister", })
+    @ApiOperation(value = "Unregister", notes = "By tapping on the \"Unregister\" button at the main page, an AJAX request is sent to this endpoint, unregister, then redirected to /.", response = Object.class, tags={ "unregister", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The server successfully processed the request.", response = Void.class),
-        @ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-        @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Void.class) })
+        @ApiResponse(code = 200, message = "The server successfully processed the request.", response = Object.class),
+        @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
+        @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/unregister",
         method = RequestMethod.GET)
-    ResponseEntity<Void> unregisterGet( @NotNull @ApiParam(value = "This is uuid of user which will be uregistered", required = true) @RequestParam(value = "uuid", required = true) String uuid,
+    ResponseEntity<Object> unregisterGet( @NotNull @ApiParam(value = "This is user:password Base64 encoded pair of user which will be uregistered", required = true) @RequestParam(value = "Authorization", required = true) String Authorization,
         @ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken);
 
 }

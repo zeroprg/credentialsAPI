@@ -44,15 +44,11 @@ public class RegisterApiController implements RegisterApi {
     		mySecretData.setNewInstance(true);
 			persistance.writeSecrets(credentials[0], null,  mySecretData);
 			retObj = secureToken;
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException  | AccessException e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = status.getReasonPhrase();
-		} catch (AccessException e) {
-			e.printStackTrace();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();			
-		}    	
+			retObj = e.getMessage();	
+		}	
         return new ResponseEntity<Object>(retObj, status);
     }
 	
