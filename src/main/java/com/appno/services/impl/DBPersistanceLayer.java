@@ -18,10 +18,7 @@ import com.appno.persistance.entities.MySecretData;
 import com.appno.security.ISHA;
 import com.appno.services.IPersistence;
 
-//for jsr310 java 8 java.time.*
-//@EntityScan(
-//        basePackageClasses = { SpringBootConsoleApplication.class, Jsr310JpaConverters.class }
-//)
+
 @Component
 public class DBPersistanceLayer implements IPersistence {
 
@@ -34,6 +31,10 @@ public class DBPersistanceLayer implements IPersistence {
 	private static final String TOKEN_EXPIRED = "Token expired, please relogin";
 
 	private static final String USER_DISABLED = "User temporaly disabled";
+
+	private static final String USER_UNREGISTERED = "User was permanent disabled";
+
+	private static final String USER_NOT_EXIST_OR_DISABLED = "User does not exist or disabled";
 
     @Autowired 
     ISHA sha;
@@ -74,7 +75,8 @@ public class DBPersistanceLayer implements IPersistence {
 		if( mySecretDataDTO.getEmail() != null )  mySecretData.setEmail(mySecretDataDTO.getEmail());
 		if( mySecretDataDTO.getPassword() != null ) mySecretData.setPassword(sha.hash(mySecretDataDTO.getPassword()));
 		if( mySecretDataDTO.getSecureToken() != null )  mySecretData.setSecureToken(sha.hash(mySecretDataDTO.getSecureToken()));
-		
+		mySecretData.setDisabled(mySecretDataDTO.getDisabled());
+	//	mySecretData.setAdmin(mySecretDataDTO.getAdmin());		
 		mySecretDataRepository.save(mySecretData);
 	}
 
@@ -90,7 +92,9 @@ public class DBPersistanceLayer implements IPersistence {
 			mySecretDataDTO.setEmail(mySecretData.getEmail());
 			mySecretDataDTO.setPassword(mySecretData.getPassword());
 			mySecretDataDTO.setSecureToken(mySecretData.getSecureToken());
-		}
+			mySecretDataDTO.setDisabled(mySecretData.getDisabled());
+	//		mySecretDataDTO.setAdmin(mySecretData.getAdmin());
+		}else throw new AccessException(USER_NOT_EXIST_OR_DISABLED);
 		return mySecretDataDTO;
 	}
 
@@ -100,15 +104,19 @@ public class DBPersistanceLayer implements IPersistence {
 		if(mySecretDatas.size() > 1) {
 			throw new AccessException(MORE_THEN_ONE_USER_FOUND);
 		} else 
-		
-		if((new Date()).compareTo(mySecretDatas.get(0).getExpireDate()) > 0) {
+		if(mySecretDatas.get(0).getDisabled()) {
+			throw new AccessException(USER_UNREGISTERED);
+		} else 
+		// do the check if registration was by token	
+		if((new Date()).compareTo(mySecretDatas.get(0).getExpireDate()) > 0  && checkTokenValidation) {
 			throw new AccessException(TOKEN_EXPIRED);
 		}
-		
+		else
+		// do the check if registration was by token
 		if( !mySecretDatas.get(0).getActive() && checkTokenValidation) {
 			throw new AccessException(USER_DISABLED);
 		}
-		
+	
 	}
 
 
@@ -124,7 +132,9 @@ public class DBPersistanceLayer implements IPersistence {
 			mySecretDataDTO.setEmail(mySecretData.getEmail());
 			mySecretDataDTO.setPassword(mySecretData.getPassword());
 			mySecretDataDTO.setSecureToken(mySecretData.getSecureToken());
-		}
+			mySecretDataDTO.setDisabled(mySecretData.getDisabled());
+	//		mySecretDataDTO.setAdmin(mySecretData.getAdmin());
+		} else  throw new AccessException(USER_NOT_EXIST_OR_DISABLED);
 		return mySecretDataDTO;
 	}
 

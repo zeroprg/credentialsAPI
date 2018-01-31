@@ -33,6 +33,8 @@ public class MySecretData {
 
 	Date expireDate;
     Boolean active;
+    Boolean disabled;
+ //   Boolean admin;
     
     @Column(unique=true)    
     String secureToken;
@@ -114,5 +116,21 @@ public class MySecretData {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-    
+
+	public Boolean getDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(Boolean disabled) {
+		this.disabled = disabled;
+	}
+
+/*	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+ */   
 }

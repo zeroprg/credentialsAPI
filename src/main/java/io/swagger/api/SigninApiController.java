@@ -32,11 +32,12 @@ public class SigninApiController implements SigninApi {
     	
     	try {
 			if(  persistance.readSecretsByToken(securetoken, isEmailToken) == null ) {
-				Errormsg error = new Errormsg();
+/*				Errormsg error = new Errormsg();
 				error.setCode(HttpStatus.UNAUTHORIZED.value());
-				error.setMsg(HttpStatus.UNAUTHORIZED.getReasonPhrase());
-				retObj = error;
+				error.setMsg(HttpStatus.UNAUTHORIZED.getReasonPhrase());*/
 				status = HttpStatus.UNAUTHORIZED;
+				retObj = status.getReasonPhrase();
+
 			}
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block

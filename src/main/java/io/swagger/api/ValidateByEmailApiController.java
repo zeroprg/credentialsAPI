@@ -35,7 +35,7 @@ public class ValidateByEmailApiController implements ValidateByEmailApi {
     private IPersistence persistance;
 
 
-    public ResponseEntity<Object> validateByEmailGet(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken) {
+    public ResponseEntity<Object> validateByEmailGet(@ApiParam(value = "" ,required=true ) @RequestParam(value="securetoken", required=true) String securetoken) {
     	HttpStatus status = HttpStatus.OK;
 		Object retObj = securetoken;
 		boolean isEmailToken = true;

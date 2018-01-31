@@ -41,14 +41,14 @@ public class UpdatePasswordApiController implements UpdatePasswordApi {
 		boolean isEmailToken = false;
 		
 		try {
-			mySecretDataDTO = ((MySecretDataDTO) persistance.readSecretsByToken(secureToken, isEmailToken));
+			mySecretDataDTO = (MySecretDataDTO) persistance.readSecretsById(credentials[0]);// Token(secureToken, isEmailToken));
 
 			String password = mySecretDataDTO.getPassword();
 			// String secureToken = null;
 			String hashed_password = null;
 			hashed_password = sha.hash(credentials[1]);
-
-			if (password.equals(hashed_password) || mySecretDataDTO.getAdmin()) {
+			//TODO nice to implement something like this :  if password matched or current user is admin user. Only admin user may update somebody
+			if (password.equals(hashed_password)) { // || mySecretDataDTO.getAdmin()) {
 				status = HttpStatus.OK;
 				retObj = secureToken;
 			} else {
@@ -56,14 +56,14 @@ public class UpdatePasswordApiController implements UpdatePasswordApi {
 				retObj = status.getReasonPhrase();
 			}
 
-			// Update user's password in Persistanse Layer
-			mySecretDataDTO.setPassword(newpassword);
+
+		
 			// generate new secure token which will be use to authenticate by
 			// default in browser
 			String newSecureToken = passwordTool.generatePassPhrase();
-			mySecretDataDTO.setSecureToken(newSecureToken);
+			// Update user's password in Persistanse Layer
 			retObj = newSecureToken;
-			persistance.writeSecrets(credentials[0], null, new MySecretDataDTO(credentials[0], null, newSecureToken));
+			persistance.writeSecrets(credentials[0], null, new MySecretDataDTO(credentials[0], newpassword, newSecureToken));
 		} catch (NoSuchAlgorithmException  | AccessException e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;

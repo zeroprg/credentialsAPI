@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import java.security.NoSuchAlgorithmException;
 
-import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
@@ -10,17 +9,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import com.appno.configuration.LocalServerUrlBuilder;
 import com.appno.dto.model.MySecretDataDTO;
+import com.appno.email.EmailService;
 import com.appno.services.IPasswordsTool;
 import com.appno.services.IPersistence;
 
 import io.swagger.annotations.ApiParam;
-import io.swagger.model.Errormsg;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-24T21:44:51.228-08:00")
 
 @Controller
 public class ResetPasswordApiController implements ResetPasswordApi {
     private static final Object RESET_PASSWORD_MSG = "eMail to reset password was sent to ";
+	private static final String EMAIL_TEXT = "Your password was reset , please confirm it by clicking on this url: ";
+	private static final String EMAIL_HEADER = "BCAA password reset";
+
+	@Autowired    
+	LocalServerUrlBuilder localServerUrlBuilder;
+    @Autowired
+    private EmailService emailService;
+    
 	@Autowired
     private IPersistence persistance;
 	@Autowired
@@ -39,14 +47,17 @@ public class ResetPasswordApiController implements ResetPasswordApi {
 				retObj = status.getReasonPhrase();	
 				
 			} else {
-				//TODO make everything in one transaction
-				// initialize eMail to customer
+			
 				String eMail = mySecretDataDTO.getEmail();
 				status = HttpStatus.OK;
 				// generate secure token which will be use to authenticate by
 				// default in browser
 				String newSecureToken = passwordTool.generatePassPhrase();
-				retObj = RESET_PASSWORD_MSG + eMail + " with link  ... /validate-by-email/" + newSecureToken;
+				// initialize eMail to customer
+				String link = localServerUrlBuilder.getUrl() + "/validate-by-email?securetoken=" + newSecureToken;
+				emailService.sendSimpleMessage(eMail, EMAIL_HEADER, EMAIL_TEXT + link );
+				retObj = RESET_PASSWORD_MSG + eMail + " with link: " + link;
+				
 				mySecretDataDTO = new MySecretDataDTO(null, null, newSecureToken);
 				// make temporary not active : do not allow to signin by eMail validation token
 				mySecretDataDTO.setActive(false);

@@ -9,7 +9,8 @@ public  class MySecretDataDTO {
 	Boolean validationByEmailToken;
 	Integer validInMinutes;
 	Boolean active = true;
-	Boolean admin = false;
+	//Boolean admin = false;
+	Boolean disabled = false;
 	Boolean newInstance = false;
 
 
@@ -69,7 +70,7 @@ public  class MySecretDataDTO {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-	
+/*	
 	public Boolean getAdmin() {
 		return admin;
 	}
@@ -77,13 +78,21 @@ public  class MySecretDataDTO {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
-
+*/
 	public Boolean getValidationByEmailToken() {
 		return validationByEmailToken;
 	}
 
 	public void setValidationByEmailToken(Boolean validationByEmailToken) {
 		this.validationByEmailToken = validationByEmailToken;
+	}
+
+	public Boolean getDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(Boolean disable) {
+		this.disabled = disable;
 	}
 	
 }

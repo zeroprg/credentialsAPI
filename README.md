@@ -54,6 +54,10 @@ There is subfolder credentialsAPI_0.0.1 which contains the same API but persista
  It's means if user's password encrypted then only the same  user will decrypted this password by the his password iself. 
  If user lost the password only reset password which initiated by the same user (check by eMail validation) can help. 
  It help preventing to decrypt all others users if somehow hackers will findout the passsword or key. 
+ Match input and stored passwords by comparing digests, not unencrypted strings.
+ Use the salt (binary numbers before  password before its started encrypted)
+ Recomendations: http://www.jasypt.org/howtoencryptuserpasswords.html
+
   
 # API Generation details
 

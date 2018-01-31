@@ -45,7 +45,7 @@ public class UnregisterApiController implements UnregisterApi {
 
 			} else {
 	    		MySecretDataDTO  mySecretData = new MySecretDataDTO(null, null, "Invalidate this Token");
-	    		mySecretData.setActive(false);
+	    		mySecretData.setDisabled(true);
 				persistance.writeSecrets(null, securetoken,  mySecretData);
 			}
 		} catch (NoSuchAlgorithmException  | AccessException e) {

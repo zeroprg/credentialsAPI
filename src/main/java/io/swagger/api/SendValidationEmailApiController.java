@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.appno.configuration.LocalServerUrlBuilder;
 import com.appno.dto.model.MySecretDataDTO;
+import com.appno.email.EmailService;
 import com.appno.persistance.entities.MySecretData;
 import com.appno.services.IPasswordsTool;
 import com.appno.services.IPersistence;
@@ -30,19 +32,27 @@ import javax.validation.constraints.*;
 
 @Controller
 public class SendValidationEmailApiController implements SendValidationEmailApi {
-	private static final Object RESET_PASSWORD_MSG = "eMail to reset password was sent to ";
+    private static final Object RESET_PASSWORD_MSG = "eMail to reset password was sent to ";
+	private static final String EMAIL_TEXT = "Your password was reset , please confirm it by clicking on this url: ";
+	private static final String EMAIL_HEADER = "BCAA password reset";
+	
+	@Autowired    
+	private LocalServerUrlBuilder localServerUrlBuilder;
+    @Autowired
+    private EmailService emailService;
+    
 	@Autowired
 	private IPersistence persistance;
 	@Autowired
 	private IPasswordsTool passwordTool;
 
 	public ResponseEntity<Object> sendValidationEmailPost(
-			@ApiParam(value = "", required = true) @RequestHeader(value = "email", required = true) String email) {
+			@ApiParam(value = "", required = true) @RequestHeader(value = "email", required = true) String eMail) {
 		HttpStatus status = HttpStatus.OK;
-		Object retObj = email;
+		Object retObj = eMail;
 		try {
 
-			MySecretDataDTO mySecretData = (MySecretDataDTO) persistance.readSecretsById(email);
+			MySecretDataDTO mySecretData = (MySecretDataDTO) persistance.readSecretsById(eMail);
 
 			if (mySecretData == null) {
 				Errormsg error = new Errormsg();
@@ -56,14 +66,17 @@ public class SendValidationEmailApiController implements SendValidationEmailApi 
 				// generate secure token which will be use to authenticate by
 				// default in browser
 				String newSecureToken = passwordTool.generatePassPhrase();
-				retObj = RESET_PASSWORD_MSG + email + " with link  ... /validate-by-email/" + newSecureToken
-						+ "(This is the test only)";
+				// initialize eMail to customer
+				String link = localServerUrlBuilder.getUrl() + "/validate-by-email?securetoken=" + newSecureToken;
+				emailService.sendSimpleMessage(eMail, EMAIL_HEADER, EMAIL_TEXT + link );
+				retObj = RESET_PASSWORD_MSG + eMail + " with link: " + link;
 
-				MySecretDataDTO mySecretDataDTO = new MySecretDataDTO(email, null, newSecureToken);
+
+				MySecretDataDTO mySecretDataDTO = new MySecretDataDTO(eMail, null, newSecureToken);
 				// make temporary not active
 				mySecretDataDTO.setActive(false);
 				// send eMail here ....
-				persistance.writeSecrets(email, null, mySecretDataDTO);
+				persistance.writeSecrets(eMail, null, mySecretDataDTO);
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();

@@ -27,6 +27,6 @@ public interface ValidateByEmailApi {
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/validate-by-email",
         method = RequestMethod.GET)
-    ResponseEntity<Object> validateByEmailGet(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken);
+    ResponseEntity<Object> validateByEmailGet(@ApiParam(value = "" ,required=true ) @RequestParam(value="securetoken", required=true) String securetoken);
 
 }
