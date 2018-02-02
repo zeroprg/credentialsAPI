@@ -24,6 +24,7 @@ public interface ValidateByEmailApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "The server successfully processed the request.", response = Object.class),
         @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
+        @ApiResponse(code = 500, message = "Internal server exception", response = Object.class),
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/validate-by-email",
         method = RequestMethod.GET)

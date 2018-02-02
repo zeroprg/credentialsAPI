@@ -15,6 +15,7 @@ import com.appno.services.IPersistence;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Errormsg;
 
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-20T15:40:13.391-08:00")
 
 @Controller
@@ -37,7 +38,8 @@ public class SignoutApiController implements SignoutApi {
 				retObj = error;
 				status = HttpStatus.UNAUTHORIZED;
 			} else {
-	    		MySecretDataDTO  mySecretData = new MySecretDataDTO(null, null, "Invalidate this  Token");
+	    		MySecretDataDTO  mySecretData = new MySecretDataDTO();
+	    		mySecretData.setActive(false);
 				persistance.writeSecrets(null, securetoken,  mySecretData);
 			}
 		} catch (NoSuchAlgorithmException  | AccessException e) {

@@ -19,8 +19,9 @@ public interface PasswordStrengthApi {
 
     @ApiOperation(value = "PasswordStrength", notes = "By tapping on the \"Password\" field at the main page, an AJAX request is sent to this endpoint to check how strong the password is. Result is itnteger from 0 to 100 /. Password send in Base64 encoding", response = Object.class, tags={ "password", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "The server successfully processed the request and is not returning any content.", response = Object.class),
+        @ApiResponse(code = 200, message = "The server successfully processed the request and is not returning any content.", response = Object.class),
         @ApiResponse(code = 400, message = "Bad Request", response = Object.class),
+        @ApiResponse(code = 500, message = "Internal server exception", response = Object.class),
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/password-strength",
         method = RequestMethod.GET)

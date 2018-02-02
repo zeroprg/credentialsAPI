@@ -35,11 +35,6 @@ public class UnregisterApiController implements UnregisterApi {
     	
     	try {
 			if(  persistance.readSecretsByToken(securetoken, isEmailToken) == null ) {
-/*				Errormsg error = new Errormsg();
-				error.setCode(HttpStatus.UNAUTHORIZED.value());
-				error.setMsg(HttpStatus.UNAUTHORIZED.getReasonPhrase());
-				retObj = error;
-				status = HttpStatus.UNAUTHORIZED;*/
 				status = HttpStatus.UNAUTHORIZED;
 				retObj = status.getReasonPhrase();	
 

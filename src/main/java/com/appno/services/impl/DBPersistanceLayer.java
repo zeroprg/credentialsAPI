@@ -76,7 +76,6 @@ public class DBPersistanceLayer implements IPersistence {
 		if( mySecretDataDTO.getPassword() != null ) mySecretData.setPassword(sha.hash(mySecretDataDTO.getPassword()));
 		if( mySecretDataDTO.getSecureToken() != null )  mySecretData.setSecureToken(sha.hash(mySecretDataDTO.getSecureToken()));
 		mySecretData.setDisabled(mySecretDataDTO.getDisabled());
-	//	mySecretData.setAdmin(mySecretDataDTO.getAdmin());		
 		mySecretDataRepository.save(mySecretData);
 	}
 
@@ -93,7 +92,6 @@ public class DBPersistanceLayer implements IPersistence {
 			mySecretDataDTO.setPassword(mySecretData.getPassword());
 			mySecretDataDTO.setSecureToken(mySecretData.getSecureToken());
 			mySecretDataDTO.setDisabled(mySecretData.getDisabled());
-	//		mySecretDataDTO.setAdmin(mySecretData.getAdmin());
 		}else throw new AccessException(USER_NOT_EXIST_OR_DISABLED);
 		return mySecretDataDTO;
 	}
@@ -108,10 +106,12 @@ public class DBPersistanceLayer implements IPersistence {
 			throw new AccessException(USER_UNREGISTERED);
 		} else 
 		// do the check if registration was by token	
-		if((new Date()).compareTo(mySecretDatas.get(0).getExpireDate()) > 0  && checkTokenValidation) {
+		//TODO remove it if you decide use temporary time based tokens	
+		/*		
+ 	    if((new Date()).compareTo(mySecretDatas.get(0).getExpireDate()) > 0  && checkTokenValidation) {
 			throw new AccessException(TOKEN_EXPIRED);
 		}
-		else
+		*/
 		// do the check if registration was by token
 		if( !mySecretDatas.get(0).getActive() && checkTokenValidation) {
 			throw new AccessException(USER_DISABLED);
@@ -133,7 +133,6 @@ public class DBPersistanceLayer implements IPersistence {
 			mySecretDataDTO.setPassword(mySecretData.getPassword());
 			mySecretDataDTO.setSecureToken(mySecretData.getSecureToken());
 			mySecretDataDTO.setDisabled(mySecretData.getDisabled());
-	//		mySecretDataDTO.setAdmin(mySecretData.getAdmin());
 		} else  throw new AccessException(USER_NOT_EXIST_OR_DISABLED);
 		return mySecretDataDTO;
 	}

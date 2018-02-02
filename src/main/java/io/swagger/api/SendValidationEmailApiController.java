@@ -78,14 +78,10 @@ public class SendValidationEmailApiController implements SendValidationEmailApi 
 				// send eMail here ....
 				persistance.writeSecrets(eMail, null, mySecretDataDTO);
 			}
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException  | AccessException e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();
-		} catch (AccessException e) {
-			e.printStackTrace();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			retObj = e.getMessage();
+			retObj = e.getMessage();	
 		}
 
 		return new ResponseEntity<Object>(retObj, status);

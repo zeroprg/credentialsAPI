@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.model.PasswordStrength;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-20T11:12:24.482-08:00")
 
+
 @Controller
 public class PasswordStrengthApiController implements PasswordStrengthApi {
     @Autowired

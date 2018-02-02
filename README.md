@@ -58,6 +58,9 @@ There is subfolder credentialsAPI_0.0.1 which contains the same API but persista
  Use the salt (binary numbers before  password before its started encrypted)
  Recomendations: http://www.jasypt.org/howtoencryptuserpasswords.html
 
+#CORS issue which may happened because cloud deploying
+For AMazon:
+Adding CORS settings to Nginx on AWS Elastic Beanstalk 
   
 # API Generation details
 

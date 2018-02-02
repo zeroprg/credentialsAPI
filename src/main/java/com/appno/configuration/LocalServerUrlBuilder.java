@@ -3,6 +3,7 @@ package com.appno.configuration;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +12,7 @@ public class LocalServerUrlBuilder {
 
 	private String host;
 
-	@Value("${server.port}")
-	private String serverPort;
+
 	@Value("${server.contextPath}")
 	private String contextPath;
 	@Value("${server.protocol}")
@@ -20,14 +20,16 @@ public class LocalServerUrlBuilder {
 	@Value("${server.host}")
 	private String host_provided;
 	
+    @Autowired
+    private org.springframework.boot.autoconfigure.web.ServerProperties serverProperties;
+	
 	private String url;
 
 	public String getUrl() {
 		try {
-			if(host_provided == null){ 
-			host = InetAddress.getLocalHost().getHostName();
-			
-			if(host.startsWith("ip-")) host = InetAddress.getLocalHost().getHostAddress(); //host.replace("ip-", "").replace('-' , '.');
+			if("${server.host}".equals(host_provided)){ 
+				host = InetAddress.getLocalHost().getHostName();
+				if(host.startsWith("ip-")) host = InetAddress.getLocalHost().getHostAddress(); //host.replace("ip-", "").replace('-' , '.');
 			} else {
 				host = host_provided;
 			}
@@ -35,7 +37,7 @@ public class LocalServerUrlBuilder {
 			e.printStackTrace();
 		}
 
-		url = protocol + "://" + host + ":" + serverPort  + contextPath;
+		url = protocol + "://" + host + ":" + serverProperties.getPort()  + contextPath;
 		return url;
 	}
 
