@@ -12,7 +12,7 @@ public  class MySecretDataDTO {
 	//Boolean admin = false;
 	Boolean disabled = false;
 	Boolean newInstance = false;
-
+    String IP;
 
 	public Boolean getNewInstance() {
 		return newInstance;
@@ -93,6 +93,14 @@ public  class MySecretDataDTO {
 
 	public void setDisabled(Boolean disable) {
 		this.disabled = disable;
+	}
+
+	public String getIP() {
+		return IP;
+	}
+
+	public void setIP(String iP) {
+		IP = iP;
 	}
 	
 }

@@ -67,7 +67,8 @@ public class DBPersistanceLayer implements IPersistence {
 		}	
 		mySecretData.setDate(new Date());
 		long now = System.currentTimeMillis();
-		now += (mySecretDataDTO.getValidInMinutes() == null ? 30 * 60 * 1000 :mySecretDataDTO.getValidInMinutes() * 60 * 1000);
+		// set validity period for 900 minutes
+		now += (mySecretDataDTO.getValidInMinutes() == null ? 900 * 60 * 1000 :mySecretDataDTO.getValidInMinutes() * 60 * 1000);
 		mySecretData.setExpireDate(new Date(now));
 		
 	    mySecretData.setActive(mySecretDataDTO.getActive());
@@ -76,6 +77,7 @@ public class DBPersistanceLayer implements IPersistence {
 		if( mySecretDataDTO.getPassword() != null ) mySecretData.setPassword(sha.hash(mySecretDataDTO.getPassword()));
 		if( mySecretDataDTO.getSecureToken() != null )  mySecretData.setSecureToken(sha.hash(mySecretDataDTO.getSecureToken()));
 		mySecretData.setDisabled(mySecretDataDTO.getDisabled());
+		mySecretData.setIP(mySecretDataDTO.getIP());
 		mySecretDataRepository.save(mySecretData);
 	}
 
