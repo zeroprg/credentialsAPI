@@ -37,7 +37,7 @@ public class RecaptchaService {
 		Map<String, Object> responseBody = recaptchaResponseEntity.getBody();
 		boolean recaptchaSucess = (Boolean)responseBody.get("success");
 		if ( !recaptchaSucess) {
-			List<String> errorCodes = (List)responseBody.get("error-codes");
+			List<String> errorCodes = (List<String>)responseBody.get("error-codes");
 			String errorMessage = errorCodes.stream()
 					.map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
 					.collect(Collectors.joining(", "));

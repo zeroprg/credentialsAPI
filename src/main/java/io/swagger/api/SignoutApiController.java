@@ -23,7 +23,7 @@ public class SignoutApiController implements SignoutApi {
 	@Autowired
 	private IPersistence persistance;
 
-	public ResponseEntity<Object> signoutGet(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken) {
+	public ResponseEntity<Object> signoutPost(@ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken) {
 
 
     	HttpStatus status = HttpStatus.OK;

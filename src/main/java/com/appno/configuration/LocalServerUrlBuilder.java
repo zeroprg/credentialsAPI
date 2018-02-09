@@ -37,7 +37,7 @@ public class LocalServerUrlBuilder {
 			e.printStackTrace();
 		}
 
-		url = protocol + "://" + host + ":" + serverProperties.getPort()  + contextPath;
+		url = protocol + "://" + host  + contextPath;
 		return url;
 	}
 

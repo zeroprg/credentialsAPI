@@ -60,10 +60,10 @@ public class UpdatePasswordApiController implements UpdatePasswordApi {
 		
 			// generate new secure token which will be use to authenticate by
 			// default in browser
-			String newSecureToken = passwordTool.generatePassPhrase();
+			//String newSecureToken = passwordTool.generatePassPhrase();
 			// Update user's password in Persistanse Layer
-			retObj = newSecureToken;
-			persistance.writeSecrets(credentials[0], null, new MySecretDataDTO(credentials[0], newpassword, newSecureToken));
+			//retObj = newSecureToken;
+			persistance.writeSecrets(credentials[0], null, new MySecretDataDTO(credentials[0], newpassword, secureToken));
 		} catch (NoSuchAlgorithmException  | AccessException e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;

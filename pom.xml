@@ -32,7 +32,7 @@
         </plugins>
     </build>
     <dependencies>
-        <dependency>
+  <!--       <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -40,7 +40,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency> -->
+        
+        		<!-- hot swapping, disable cache for template, enable live reload -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+ 
+        
         <!--SpringFox dependencies -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -95,18 +104,24 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
-        
-<!-- 		<dependency>
+<!--         
+		<dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
 		    <scope>runtime</scope>
-		</dependency> -->
+		</dependency> 
 				
-		<dependency>
+ -->
+ 	<dependency>
 		  <groupId>org.postgresql</groupId>
 		  <artifactId>postgresql</artifactId>
-		  </dependency> 
+    </dependency> 
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 
+ 
     </dependencies>
 </project>

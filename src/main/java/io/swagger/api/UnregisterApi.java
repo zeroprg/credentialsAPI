@@ -26,8 +26,8 @@ public interface UnregisterApi {
         @ApiResponse(code = 500, message = "Internal server exception", response = Object.class),
         @ApiResponse(code = 401, message = "The user does not have the necessary credentials.", response = Object.class) })
     @RequestMapping(value = "/unregister",
-        method = RequestMethod.GET)
-    ResponseEntity<Object> unregisterGet( @NotNull @ApiParam(value = "This is user:password Base64 encoded pair of user which will be uregistered", required = true) @RequestParam(value = "Authorization", required = true) String Authorization,
-        @ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken);
+        method = RequestMethod.POST)
+    ResponseEntity<Object> unregisterPost( @NotNull @ApiParam(value = "This is user:password Base64 encoded pair of user which will be uregistered", required = true) @RequestHeader(value = "Authorization", required = true) String Authorization,
+        @ApiParam(value = "" ,required=false ) @RequestHeader(value="securetoken", required=false) String securetoken);
 
 }

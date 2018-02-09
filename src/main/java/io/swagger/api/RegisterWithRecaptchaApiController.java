@@ -32,13 +32,13 @@ public class RegisterWithRecaptchaApiController implements RegisterWithRecaptcha
     private IPersistence persistance;
 
 	public ResponseEntity<Object> registerPost(
-			@ApiParam(value = "Send Base64 encoded user:password pair", required = true)
-			@RequestHeader(value = "Authorization", required = true) String authorization,
-    		@ApiParam(value = "" ,required=true ) @RequestHeader(name="g-recaptcha-response") String recaptchaResponse,
-    		@ApiParam(value = "" ,required=true ) @RequestHeader(name="ip-address") String ip) 
+    		@ApiParam(value = "" ,required=true ) @RequestParam(value="email", required=true) String email,
+    		@ApiParam(value = "" ,required=true ) @RequestParam(value="password", required=true) String password,
+    		@ApiParam(value = "" ,required=true ) @RequestParam(name="g-recaptcha-response") String recaptchaResponse,
+    		@ApiParam(value = "" ,required=false ) @RequestParam(name="ip-address") String ip)
 	{
     	
-    	String credentials[] = authorization.split(":");
+    //	String credentials[] = authorization.split(":");
     	
     	// generate secure token which will be use to authenticate by default in browser
     	String secureToken = passwordTool.generatePassPhrase();
@@ -55,10 +55,10 @@ public class RegisterWithRecaptchaApiController implements RegisterWithRecaptcha
 			
 	    	try {  	
 	    	// Store user's password in Persistanse Layer
-	    		MySecretDataDTO  mySecretData = new MySecretDataDTO(credentials[0], credentials[1], secureToken);
+	    		MySecretDataDTO  mySecretData = new MySecretDataDTO(email, password, secureToken);
 	    		mySecretData.setNewInstance(true);
 	    		mySecretData.setIP(ip);
-				persistance.writeSecrets(credentials[0], null,  mySecretData);
+				persistance.writeSecrets(email, null,  mySecretData);
 				retObj = secureToken;
 			} catch (NoSuchAlgorithmException  | AccessException e) {
 				e.printStackTrace();

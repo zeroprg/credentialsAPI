@@ -27,14 +27,24 @@ public class UnregisterApiController implements UnregisterApi {
 
 
 
-    public ResponseEntity<Object> unregisterGet( @NotNull @ApiParam(value = "This is user:password Base64 encoded pair of user which will be uregistered", required = true) @RequestParam(value = "Authorization", required = true) String Authorization,
-        @ApiParam(value = "" ,required=true ) @RequestHeader(value="securetoken", required=true) String securetoken) {
+    public ResponseEntity<Object> unregisterPost( @NotNull @ApiParam(value = "This is user:password Base64 encoded pair of user which will be uregistered", required = true) @RequestHeader(value = "Authorization", required = true) String authorization,
+        @ApiParam(value = "" ,required=false ) @RequestHeader(value="securetoken", required=false) String securetoken) {
     	HttpStatus status = HttpStatus.OK;
 		Object retObj = "User was successefuly unregistered from the system";
 		boolean isEmailToken = false;
     	
     	try {
-			if(  persistance.readSecretsByToken(securetoken, isEmailToken) == null ) {
+    	if( securetoken == null  ){
+    		if( authorization != null && persistance.readSecretsById(authorization.split(":")[0])!= null){
+	    		MySecretDataDTO  mySecretData = new MySecretDataDTO(null, null, "Invalidate this Token");
+	    		mySecretData.setDisabled(true);
+				persistance.writeSecrets(authorization.split(":")[0], null,  mySecretData);
+    		} else{
+				status = HttpStatus.UNAUTHORIZED;
+				retObj = status.getReasonPhrase();	
+    		}
+    		
+    	} else if(  persistance.readSecretsByToken(securetoken, isEmailToken) == null  ) {
 				status = HttpStatus.UNAUTHORIZED;
 				retObj = status.getReasonPhrase();	
 
